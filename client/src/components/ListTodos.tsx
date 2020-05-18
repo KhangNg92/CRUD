@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { fetchAllTodos, deleteTodo } from "../store/actions";
+import React, { useEffect, FC } from "react";
 import EditTodo from "./EditTodo";
+import { ListTodoProps } from "../containers/ListTodoContainer";
 
-const ListTodos = (props: any) => {
+const ListTodos: FC<ListTodoProps> = ({
+  todos,
+  deleteTodo,
+  fetchAllTodos,
+  editTodo
+}) => {
   useEffect(() => {
-    props.dispatch(fetchAllTodos());
-  }, []);
+    fetchAllTodos();
+  }, [fetchAllTodos]);
 
   return (
     <>
@@ -20,23 +24,21 @@ const ListTodos = (props: any) => {
           </tr>
         </thead>
         <tbody>
-          {/* <tr>
-            <td>John</td>
-            <td>Mark</td>
-            <td>Otto</td>
-          </tr> */}
-
-          {!!props.todos.length &&
-            props.todos.map((todo: any) => (
-              <tr key={todo.todo_id}>
-                <td>{todo.description}</td>
+          {!!todos.length &&
+            todos.map(({ todo_id, description }) => (
+              <tr key={todo_id}>
+                <td>{description}</td>
                 <td>
-                  <EditTodo todo={todo} />
+                  <EditTodo
+                    id={todo_id}
+                    descriptionProps={description}
+                    editTodo={editTodo}
+                  />
                 </td>
                 <td>
                   <button
                     className="btn btn-danger"
-                    onClick={() => props.dispatch(deleteTodo(todo.todo_id))}
+                    onClick={() => deleteTodo(todo_id)}
                   >
                     {" "}
                     Delete
@@ -50,6 +52,4 @@ const ListTodos = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({ todos: state.todos });
-
-export default connect(mapStateToProps)(ListTodos);
+export default ListTodos;

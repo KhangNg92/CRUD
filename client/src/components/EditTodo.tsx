@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, FC } from "react";
 import { connect } from "react-redux";
-import { editTodo } from "../store/actions";
 
-const EditTodo = (props: any) => {
-  const [description, setDescription] = useState(props.todo.description);
+type EditTodoProps = {
+  id: number;
+  descriptionProps: string;
+  editTodo: Function;
+};
+
+const EditTodo: FC<EditTodoProps> = ({ id, descriptionProps, editTodo }) => {
+  const [description, setDescription] = useState(descriptionProps);
 
   return (
     <>
@@ -11,12 +16,12 @@ const EditTodo = (props: any) => {
         type="button"
         className="btn btn-warning"
         data-toggle="modal"
-        data-target={`#id${props.todo.todo_id}`}
+        data-target={`#id${id}`}
       >
         Open modal
       </button>
 
-      <div className="modal" id={`id${props.todo.todo_id}`}>
+      <div className="modal" id={`id${id}`}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -40,9 +45,7 @@ const EditTodo = (props: any) => {
                 type="button"
                 className="btn btn-warning"
                 data-dismiss="modal"
-                onClick={() =>
-                  props.dispatch(editTodo(props.todo.todo_id, { description }))
-                }
+                onClick={() => editTodo(id, { description })}
               >
                 Edit
               </button>

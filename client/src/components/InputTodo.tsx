@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, FC } from "react";
+import { InputTodoProps } from "../containers/InputTodoContainer";
 
-import { createTodo } from "../store/actions";
-import { connect } from "react-redux";
-const InputTodo = (props: any) => {
+const InputTodo: FC<InputTodoProps> = ({ createTodo }) => {
   const [description, setDescription] = useState("");
 
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
     setDescription("");
     try {
-      props.dispatch(createTodo({ description }));
+      createTodo(description);
     } catch ({ message }) {}
   };
 
   return (
     <>
       <h1 className="text-center mt-5">Pern Todo List</h1>
-      <form className="d-flex mt-5" onSubmit={onSubmitForm}>
+      <form
+        className="d-flex mt-5"
+        onSubmit={onSubmitForm}
+        style={{ width: "75%" }}
+      >
         <input
           type="text"
           className="form-control"
@@ -30,4 +32,4 @@ const InputTodo = (props: any) => {
   );
 };
 
-export default connect()(InputTodo);
+export default InputTodo;

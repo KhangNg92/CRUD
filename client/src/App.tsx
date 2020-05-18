@@ -1,17 +1,16 @@
 import React from "react";
 
 // Components
-import InputTodo from "./components/InputTodo";
-import ListTodos from "./components/ListTodos";
-import { connect } from "react-redux";
+import ListTodoContainer from "./containers/ListTodoContainer";
+import InputTodoContainer from "./containers/InputTodoContainer";
 
 function App() {
   return (
     <div className="App">
-      <InputTodo />
-      <ListTodos />
+      <InputTodoContainer />
+      <ListTodoContainer />
     </div>
   );
 }
 
-export default connect()(App);
+export default App;

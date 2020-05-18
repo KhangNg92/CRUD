@@ -8,10 +8,11 @@ import { createStore, applyMiddleware } from "redux";
 import promiseMiddlware from "redux-promise";
 import rootReducer from "./store/reducers";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(promiseMiddlware, thunk)
+  composeWithDevTools(applyMiddleware(promiseMiddlware, thunk))
 );
 
 render(
